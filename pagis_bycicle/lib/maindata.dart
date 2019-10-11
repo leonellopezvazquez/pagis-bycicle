@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/widgets.dart';
 import 'package:adhara_socket_io/adhara_socket_io.dart';
 import 'dart:typed_data';
 import 'dart:convert';
+import './rowlist.dart';
 
 const String url = "http://192.168.31.157:5060/";
 
@@ -13,6 +15,9 @@ class MainData extends StatefulWidget {
     return MainDataState();
   }
 }
+
+
+
 
 class MainDataState extends State<MainData> {
   static TextStyle styles = TextStyle(fontFamily: 'Montserrat', fontSize: 24.0, color: Colors.white);
@@ -26,9 +31,12 @@ class MainDataState extends State<MainData> {
   static int volt = 0;
   static String plate = "TEST";
 
+  List<String> litems=[];
+
   Image patchIMG = Image.network(
       "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1280px-No_image_3x4.svg.png");
   Image overviewIMG;
+  Image overviewIMGlist;
   Image videoIMG;
   String vrm;
 
@@ -58,54 +66,7 @@ class MainDataState extends State<MainData> {
       overflow: TextOverflow.ellipsis,
       style: styles);
 
-  
-
-
-
-  Material myCircularItems(String title, String subtitle) {
-    return Material(
-      color: Colors.white,
-      elevation: 10.0,
-      borderRadius: BorderRadius.circular(20.0),
-      shadowColor: Color(0x802196F3),
-      child: Center(
-        child: Padding(
-          padding: EdgeInsets.all(0.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.blueAccent,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 20.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  
+    
    @override
   void initState() {
     super.initState();
@@ -115,7 +76,9 @@ class MainDataState extends State<MainData> {
       patchIMG = Image.asset('assets/car.jpg',width: 500,height: 100,fit:BoxFit.cover);
 
 
+
       overviewIMG = Image.asset('assets/plate.jpg',width: 500,height: 100,fit:BoxFit.cover);
+      overviewIMGlist = Image.asset('assets/plate.jpg',width: 100,height: 100,fit:BoxFit.cover);
       vrm ="EPLATE";
   }
 
@@ -217,13 +180,22 @@ class MainDataState extends State<MainData> {
               fit: BoxFit.cover,
             );
 
-
+            
             overviewIMG = Image(
               image: MemoryImage(bytes_o),
               fit: BoxFit.cover,
             );
+            
+            overviewIMGlist = Image(
+              image: MemoryImage(bytes_o),width: 150,height: 100,
+              fit: BoxFit.cover,
+            );
+            
 
             vrm = v_rm;
+
+            litems.add(vrm);
+
           });
 
 
@@ -251,8 +223,6 @@ class MainDataState extends State<MainData> {
   Widget build(BuildContext context) {
     // TODO: implement build
     
-   
-
 
     Widget listsession(){
 
@@ -369,8 +339,6 @@ class MainDataState extends State<MainData> {
     }
 
    
-
-
     return new Scaffold(
         backgroundColor: const Color(0xFF4F5D72),
         
@@ -446,28 +414,29 @@ class MainDataState extends State<MainData> {
     );
   }
 
-  Widget imagefromlist() {
+  Widget imagefromlist(Image imagen) {
     return Container(
       //padding: new EdgeInsets.fromLTRB(0, 100, 0,100),
-      child: Image.asset('assets/car.jpg', width: 100, height: 100, fit: BoxFit.cover,)
+      child:imagen,
+      //child: Image.asset('assets/car.jpg', width: 100, height: 100, fit: BoxFit.cover,)
     );
   }
 
-  Widget textfromlist() {
+  Widget textfromlist(String plate) {
     return Container(
       padding: EdgeInsets.all(20),
       child: new Column(
         mainAxisAlignment: MainAxisAlignment.center,
         
         children: <Widget>[
-          Text("EPLATE",style: TextStyle(fontStyle: FontStyle.normal,fontSize: 30)),
+          Text(plate,style: TextStyle(fontStyle: FontStyle.normal,fontSize: 30)),
           Text("1234567"),
         ],
       ),
     );
   }
 
-  Widget rowfromlist() {
+  Widget rowfromlist(Image imagen,String plate) {
     Orientation orientacion = MediaQuery.of(context).orientation;
 
     if(orientacion==Orientation.landscape){
@@ -486,8 +455,8 @@ class MainDataState extends State<MainData> {
           child:  new Row(
       
         children: <Widget>[
-          imagefromlist(),
-          textfromlist(),
+          imagefromlist(imagen),
+          textfromlist(plate),
         ],
       ) ,
 
@@ -516,8 +485,8 @@ class MainDataState extends State<MainData> {
           child:  new Row(
       
         children: <Widget>[
-          imagefromlist(),
-          textfromlist(),
+          imagefromlist(imagen),
+          textfromlist(plate),
         ],
       ) ,
 
@@ -536,47 +505,30 @@ class MainDataState extends State<MainData> {
     return ListView(
       children: [
 
-        rowfromlist(),
-        rowfromlist(),
-        rowfromlist(),
-        rowfromlist(),
-        rowfromlist(),
-        rowfromlist(),
-        rowfromlist(),
+        rowfromlist(overviewIMGlist,vrm),
+        //rowfromlist(),
+      
         
       ],
     );
   }
 
-  Widget framesforlist() {
-    double _width = MediaQuery.of(context).size.width;
-    double _height = MediaQuery.of(context).size.width;
-    return new Container(
-        child: Column(
-      children: <Widget>[
-        Padding(
-            padding: EdgeInsets.all(1),
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  color: Colors.grey,
-                  width: _width - 32,
-                  height: _height - 258,
-                ),
-                Center(
-                    child: Padding(
-                        padding: EdgeInsets.all(4),
-                        child: Container(
-                          color: Colors.white,
-                          width: _width - 48,
-                          height: _height - 266,
-                          child: rowfromlist(),
-                        ))),
-              ],
-            )),
-      ],
-    ));
+  
+
+  Widget constlista(){
+
+    return ListView.builder(
+
+      itemCount: litems.length,      
+      itemBuilder: (context, index){
+
+        return  new RowList(litems, overviewIMG, vrm);
+      },
+
+    );
   }
+
+  
 
   Widget fr1() {
     double _width = MediaQuery.of(context).size.width;
@@ -637,7 +589,8 @@ class MainDataState extends State<MainData> {
 
           child:new Padding(
             padding: EdgeInsets.only(top: 8),
-            child: lista(),
+            //child: lista(),
+            child: RowList(litems, overviewIMGlist, vrm),
           ),
           
         ),
@@ -711,9 +664,9 @@ class MainDataState extends State<MainData> {
                 width: _width-316,
                 child: new Column(
                   children: <Widget>[
-                    //textplate(vrm),
-                    //imagefromcar(patchIMG),
-                    //imagefromcar(overviewIMG),
+                    textplate(vrm),
+                    imagefromcar(patchIMG),
+                    imagefromcar(overviewIMG),
                   ],
                 ),
               ),
