@@ -5,11 +5,13 @@ class RowList extends StatelessWidget {
 
 
 
-  final List<String> items;
+  
+  final List<Image> imagenes;
 
-  RowList(this.items,this.imagen,this.plate);
+  RowList(this.imagenes,this.plate);
   Image imagen;
   String plate;
+
   
   
 
@@ -55,8 +57,19 @@ class RowList extends StatelessWidget {
         child:  new Row(
     
       children: <Widget>[
-        imagefromlist(imagen),
-        textfromlist(plate),
+        new Padding(
+          padding: EdgeInsets.all(2),
+          child:imagefromlist(imagenes[index]),
+        ),
+        new Padding(
+          padding: EdgeInsets.all(2),
+          child:textfromlist(plate),
+
+        ),
+
+        
+        
+        
       ],
     ) ,
 
@@ -85,7 +98,7 @@ class RowList extends StatelessWidget {
         child:  new Row(
     
       children: <Widget>[
-        imagefromlist(imagen),
+        imagefromlist(imagenes[index]),
         textfromlist(plate),
       ],
     ) ,
@@ -104,20 +117,11 @@ class RowList extends StatelessWidget {
 
 
 
-  
-
-
-  Widget row(){
-    return Container(
-
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemBuilder: rowfromlist,
-      itemCount: items.length,
+      itemCount: imagenes.length,
     );
   }
 

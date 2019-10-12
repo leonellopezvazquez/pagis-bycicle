@@ -32,6 +32,7 @@ class MainDataState extends State<MainData> {
   static String plate = "TEST";
 
   List<String> litems=[];
+  List<Image> overviewIMGlistimages=[];
 
   Image patchIMG = Image.network(
       "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/1280px-No_image_3x4.svg.png");
@@ -46,7 +47,7 @@ class MainDataState extends State<MainData> {
   Map<String, bool> _isProbablyConnected = {};
   //creating image widgets
 
-  
+  int cont = 0;
  
 
   static Text dispTemp = new Text('$temp' + ' °C',
@@ -193,8 +194,9 @@ class MainDataState extends State<MainData> {
             
 
             vrm = v_rm;
-
-            litems.add(vrm);
+            cont=cont+1;
+            //litems.add(vrm);
+            overviewIMGlistimages.add(overviewIMGlist);
 
           });
 
@@ -522,7 +524,7 @@ class MainDataState extends State<MainData> {
       itemCount: litems.length,      
       itemBuilder: (context, index){
 
-        return  new RowList(litems, overviewIMG, vrm);
+        return  new RowList(overviewIMGlistimages, vrm);
       },
 
     );
@@ -590,7 +592,7 @@ class MainDataState extends State<MainData> {
           child:new Padding(
             padding: EdgeInsets.only(top: 8),
             //child: lista(),
-            child: RowList(litems, overviewIMGlist, vrm),
+            child: new RowList(overviewIMGlistimages, vrm),
           ),
           
         ),
