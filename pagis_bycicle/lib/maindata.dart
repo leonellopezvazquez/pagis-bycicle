@@ -188,8 +188,8 @@ class MainDataState extends State<MainData> {
             );
             
             overviewIMGlist = Image(
-              image: MemoryImage(bytes_o),width: 150,height: 100,
-              fit: BoxFit.cover,
+              image: MemoryImage(bytes_o),width: 120,height: 100,
+              fit: BoxFit.fill,
             );
             
 
@@ -700,7 +700,7 @@ class MainDataState extends State<MainData> {
           //height: _height-328,
           child:new Padding(
             padding: EdgeInsets.only(top:8),
-            child: lista(),
+            child:  RowList(overviewIMGlistimages, vrm),
           ),
           
         ),
@@ -729,7 +729,7 @@ class MainDataState extends State<MainData> {
               height: _height-348,
               child: new Padding(
                 padding: EdgeInsets.only(top:8,bottom: 8),
-                child: lista(),
+                child:  RowList(overviewIMGlistimages, vrm),
               ),
             ),           
 

@@ -30,7 +30,7 @@ class RowList extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       
       children: <Widget>[
-        Text(plate,style: TextStyle(fontStyle: FontStyle.normal,fontSize: 30)),
+        Text(plate,style: TextStyle(fontStyle: FontStyle.normal,fontSize: 24)),
         Text("1234567"),
         ],
       ),
@@ -53,17 +53,28 @@ class RowList extends StatelessWidget {
       color: Colors.white,
       
       child:new Padding(
-        padding: EdgeInsets.all(4),
+        padding: EdgeInsets.all(0),
         child:  new Row(
     
       children: <Widget>[
         new Padding(
-          padding: EdgeInsets.all(2),
-          child:imagefromlist(imagenes[index]),
+          padding: EdgeInsets.all(0),
+
+          child:Container(
+            color: Colors.white,
+            child:imagefromlist(imagenes[index]),
+          ),
+
+          
         ),
         new Padding(
-          padding: EdgeInsets.all(2),
-          child:textfromlist(plate),
+          padding: EdgeInsets.all(0),
+
+          child:Container(
+            color: Colors.white,
+            child:textfromlist(plate),
+          ),
+          
 
         ),
 
@@ -94,12 +105,30 @@ class RowList extends StatelessWidget {
       color: Colors.white,
       
       child:new Padding(
-        padding: EdgeInsets.all(4),
+        padding: EdgeInsets.all(0),
         child:  new Row(
     
       children: <Widget>[
-        imagefromlist(imagenes[index]),
-        textfromlist(plate),
+
+        Padding(
+          padding:EdgeInsets.only(left:1,right: 0),
+          child:Container(
+            color:Colors.white,
+            child:imagefromlist(imagenes[index]),
+          ),
+          
+        ),
+
+        Padding(
+          padding: EdgeInsets.all(0),
+          child:Container(
+            color: Colors.white,
+            child:textfromlist(plate),
+          ),
+          
+        ),
+        
+        
       ],
     ) ,
 
